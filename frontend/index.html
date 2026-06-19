@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reservations DevOps</title>
+    <style>
+      :root {
+        --ink: #172033;
+        --muted: #647084;
+        --line: #d9e2ee;
+        --panel: #ffffff;
+        --page: #f3f6fb;
+        --nav: #12213d;
+        --blue: #2563eb;
+        --cyan: #0891b2;
+        --green: #16a34a;
+        --red: #dc2626;
+        --amber: #d97706;
+        --violet: #7c3aed;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--page);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 24px 18px;
+        color: white;
+        background:
+          linear-gradient(165deg, rgba(37, 99, 235, 0.35), transparent 36%),
+          linear-gradient(25deg, rgba(22, 163, 74, 0.22), transparent 42%),
+          var(--nav);
+      }
+
+      .brand {
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 23px;
+        letter-spacing: 0;
+      }
+
+      .brand p,
+      .help p {
+        margin: 8px 0 0;
+        color: #cbd5e1;
+        line-height: 1.45;
+        font-size: 14px;
+      }
+
+      .nav-card {
+        display: grid;
+        gap: 10px;
+      }
+
+      .nav-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 42px;
+        padding: 0 12px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #e8eef8;
+        font-weight: 700;
+      }
+
+      .nav-pill span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .nav-pill:nth-child(1) span {
+        background: var(--blue);
+      }
+
+      .nav-pill:nth-child(2) span {
+        background: var(--green);
+      }
+
+      .nav-pill:nth-child(3) span {
+        background: var(--amber);
+      }
+
+      .help {
+        margin-top: auto;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      main {
+        min-width: 0;
+        padding: 24px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .title h2 {
+        margin: 0;
+        font-size: 26px;
+      }
+
+      .title p {
+        margin: 6px 0 0;
+        color: var(--muted);
+      }
+
+      .api-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 38px;
+        padding: 0 13px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--panel);
+        color: var(--muted);
+        white-space: nowrap;
+        font-size: 14px;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--amber);
+      }
+
+      .dot.ok {
+        background: var(--green);
+      }
+
+      .active-user {
+        margin-bottom: 20px;
+        padding: 14px 16px;
+        border: 1px solid #bcd3ff;
+        border-left: 5px solid var(--blue);
+        border-radius: 8px;
+        background: #eef5ff;
+        color: #244064;
+        font-weight: 700;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .metric {
+        min-height: 104px;
+        padding: 16px;
+        border-radius: 8px;
+        color: white;
+        overflow: hidden;
+      }
+
+      .metric:nth-child(1) {
+        background: linear-gradient(135deg, #2563eb, #0891b2);
+      }
+
+      .metric:nth-child(2) {
+        background: linear-gradient(135deg, #16a34a, #65a30d);
+      }
+
+      .metric:nth-child(3) {
+        background: linear-gradient(135deg, #7c3aed, #db2777);
+      }
+
+      .metric span {
+        display: block;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 34px;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(300px, 390px) minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .column {
+        display: grid;
+        gap: 14px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 15px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .panel-head h2 {
+        margin: 0;
+        font-size: 17px;
+      }
+
+      .panel-body {
+        padding: 16px;
+      }
+
+      form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      input,
+      select,
+      button {
+        width: 100%;
+        min-height: 42px;
+        border-radius: 7px;
+        font: inherit;
+      }
+
+      input,
+      select {
+        padding: 0 11px;
+        border: 1px solid var(--line);
+        background: #fbfdff;
+        color: var(--ink);
+      }
+
+      button {
+        padding: 0 14px;
+        border: 0;
+        color: white;
+        background: var(--blue);
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      button:hover {
+        filter: brightness(0.96);
+      }
+
+      button.secondary {
+        color: var(--ink);
+        border: 1px solid var(--line);
+        background: #ffffff;
+      }
+
+      button.green {
+        background: var(--green);
+      }
+
+      button.orange {
+        background: var(--amber);
+      }
+
+      button.danger {
+        background: var(--red);
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+
+      .message {
+        padding: 13px 14px;
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--cyan);
+        border-radius: 8px;
+        background: #eefaff;
+        color: #155e75;
+        font-weight: 700;
+      }
+
+      .message.error {
+        color: #991b1b;
+        border-color: #fecaca;
+        border-left-color: var(--red);
+        background: #fff1f2;
+      }
+
+      .message.success {
+        color: #166534;
+        border-color: #bbf7d0;
+        border-left-color: var(--green);
+        background: #f0fdf4;
+      }
+
+      .list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--blue);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .item.resource {
+        border-left-color: var(--green);
+      }
+
+      .item.cancelled {
+        border-left-color: var(--red);
+        background: #fff7f7;
+      }
+
+      .item h3 {
+        margin: 0;
+        font-size: 15px;
+      }
+
+      .item p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 28px;
+        min-width: 92px;
+        padding: 0 10px;
+        border-radius: 999px;
+        color: #166534;
+        background: #dcfce7;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .tag.cancelled {
+        color: #991b1b;
+        background: #fee2e2;
+      }
+
+      .empty {
+        padding: 24px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        background: #fbfdff;
+        text-align: center;
+      }
+
+      @media (max-width: 980px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          min-height: auto;
+        }
+
+        .workspace,
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding: 16px;
+        }
+
+        .topbar,
+        .two,
+        .item {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <h1>Reservations DevOps</h1>
+          <p>Interface web pour tester les services Docker, l'API FastAPI et la base PostgreSQL.</p>
+        </div>
+        <nav class="nav-card">
+          <div class="nav-pill"><span></span> Utilisateurs</div>
+          <div class="nav-pill"><span></span> Ressources</div>
+          <div class="nav-pill"><span></span> Reservations</div>
+        </nav>
+        <div class="help">
+          <strong>Workflow</strong>
+          <p>Creer un utilisateur, ajouter une ressource, puis reserver un creneau disponible.</p>
+        </div>
+      </aside>
+
+      <main>
+        <div class="topbar">
+          <div class="title">
+            <h2>Tableau de bord</h2>
+            <p>Gestion des salles, creneaux et annulations.</p>
+          </div>
+          <div class="api-status">
+            <span id="apiDot" class="dot"></span>
+            <span id="apiStatus">API...</span>
+          </div>
+        </div>
+
+        <div id="activeUserLabel" class="active-user">Aucun utilisateur actif</div>
+
+        <section class="metrics">
+          <div class="metric"><span>Ressources</span><strong id="resourceCount">0</strong></div>
+          <div class="metric"><span>Reservations actives</span><strong id="activeCount">0</strong></div>
+          <div class="metric"><span>Total reservations</span><strong id="reservationCount">0</strong></div>
+        </section>
+
+        <section class="workspace">
+          <div class="column">
+            <article class="panel">
+              <div class="panel-head"><h2>1. Utilisateur</h2></div>
+              <div class="panel-body">
+                <form id="userForm">
+                  <label>Nom <input id="userName" value="Tarek" required minlength="2" /></label>
+                  <label>Email <input id="userEmail" type="email" required /></label>
+                  <button type="submit">Creer utilisateur</button>
+                </form>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head"><h2>2. Ressource</h2></div>
+              <div class="panel-body">
+                <form id="resourceForm">
+                  <label>Nom <input id="resourceName" value="Salle DevOps" required minlength="2" /></label>
+                  <label>Lieu <input id="resourceLocation" value="Campus Paris" required minlength="2" /></label>
+                  <button class="green" type="submit">Ajouter ressource</button>
+                </form>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head"><h2>3. Reservation</h2></div>
+              <div class="panel-body">
+                <form id="reservationForm">
+                  <label>Ressource <select id="resourceSelect" required></select></label>
+                  <div class="two">
+                    <label>Debut <input id="start" type="datetime-local" required /></label>
+                    <label>Fin <input id="end" type="datetime-local" required /></label>
+                  </div>
+                  <button id="reserveButton" class="orange" type="submit">Reserver</button>
+                </form>
+              </div>
+            </article>
+          </div>
+
+          <div class="column">
+            <div id="message" class="message">Pret.</div>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Ressources disponibles</h2>
+                <button id="refreshResources" class="secondary" type="button">Rafraichir</button>
+              </div>
+              <div class="panel-body"><div id="resources" class="list"></div></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Reservations</h2>
+                <button id="refreshReservations" class="secondary" type="button">Rafraichir</button>
+              </div>
+              <div class="panel-body"><div id="reservations" class="list"></div></div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const api = "http://localhost:8000";
+      const state = {
+        activeUser: JSON.parse(localStorage.getItem("activeUser") || "null"),
+        resources: [],
+        reservations: [],
+      };
+
+      const byId = (id) => document.getElementById(id);
+      const message = byId("message");
+
+      function setMessage(text, type = "") {
+        message.className = `message ${type}`.trim();
+        message.textContent = text;
+      }
+
+      function toInputDate(date) {
+        const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+        return local.toISOString().slice(0, 16);
+      }
+
+      function formatDate(value) {
+        return new Intl.DateTimeFormat("fr-FR", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }).format(new Date(value));
+      }
+
+      async function request(path, options = {}) {
+        const response = await fetch(`${api}${path}`, {
+          headers: { "Content-Type": "application/json" },
+          ...options,
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(data.detail || "Erreur API");
+        }
+        return data;
+      }
+
+      function renderActiveUser() {
+        const label = byId("activeUserLabel");
+        if (!state.activeUser) {
+          label.textContent = "Aucun utilisateur actif";
+          byId("reserveButton").disabled = true;
+          return;
+        }
+        label.textContent = `Utilisateur actif #${state.activeUser.id} - ${state.activeUser.name} (${state.activeUser.email})`;
+        byId("reserveButton").disabled = state.resources.length === 0;
+      }
+
+      function renderResources() {
+        const container = byId("resources");
+        const select = byId("resourceSelect");
+        byId("resourceCount").textContent = state.resources.length;
+        select.innerHTML = "";
+
+        if (state.resources.length === 0) {
+          container.innerHTML = '<div class="empty">Aucune ressource.</div>';
+          select.innerHTML = '<option value="">Ajouter une ressource</option>';
+          byId("reserveButton").disabled = true;
+          return;
+        }
+
+        container.innerHTML = state.resources
+          .map(
+            (resource) => `
+              <article class="item resource">
+                <div>
+                  <h3>${resource.name}</h3>
+                  <p>#${resource.id} - ${resource.location}</p>
+                </div>
+                <span class="tag">libre</span>
+              </article>
+            `,
+          )
+          .join("");
+
+        select.innerHTML = state.resources
+          .map((resource) => `<option value="${resource.id}">${resource.name} - ${resource.location}</option>`)
+          .join("");
+        byId("reserveButton").disabled = !state.activeUser;
+      }
+
+      function renderReservations() {
+        const container = byId("reservations");
+        byId("reservationCount").textContent = state.reservations.length;
+        byId("activeCount").textContent = state.reservations.filter(
+          (reservation) => reservation.status === "confirmed",
+        ).length;
+
+        if (state.reservations.length === 0) {
+          container.innerHTML = '<div class="empty">Aucune reservation.</div>';
+          return;
+        }
+
+        container.innerHTML = state.reservations
+          .map((reservation) => {
+            const resource = state.resources.find((item) => item.id === reservation.resource_id);
+            const resourceName = resource ? resource.name : `Ressource #${reservation.resource_id}`;
+            const cancelled = reservation.status === "cancelled";
+            return `
+              <article class="item ${cancelled ? "cancelled" : ""}">
+                <div>
+                  <h3>${resourceName}</h3>
+                  <p>#${reservation.id} - utilisateur #${reservation.user_id} - ${formatDate(
+                    reservation.starts_at,
+                  )} -> ${formatDate(reservation.ends_at)}</p>
+                </div>
+                ${
+                  cancelled
+                    ? '<span class="tag cancelled">annulee</span>'
+                    : `<button class="danger" type="button" data-cancel="${reservation.id}">Annuler</button>`
+                }
+              </article>
+            `;
+          })
+          .join("");
+
+        container.querySelectorAll("[data-cancel]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            await cancelReservation(button.dataset.cancel);
+          });
+        });
+      }
+
+      async function refreshResources() {
+        state.resources = await request("/resources");
+        renderResources();
+      }
+
+      async function refreshReservations() {
+        state.reservations = await request("/reservations");
+        renderReservations();
+      }
+
+      async function refreshAll() {
+        await checkHealth();
+        await refreshResources();
+        await refreshReservations();
+        renderActiveUser();
+      }
+
+      async function checkHealth() {
+        try {
+          await request("/health");
+          byId("apiDot").classList.add("ok");
+          byId("apiStatus").textContent = "API connectee";
+        } catch {
+          byId("apiDot").classList.remove("ok");
+          byId("apiStatus").textContent = "API indisponible";
+        }
+      }
+
+      async function cancelReservation(id) {
+        try {
+          await request(`/reservations/${id}/cancel`, { method: "POST" });
+          setMessage(`Reservation #${id} annulee.`, "success");
+          await refreshReservations();
+        } catch (error) {
+          setMessage(error.message, "error");
+        }
+      }
+
+      byId("userForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        try {
+          const user = await request("/users", {
+            method: "POST",
+            body: JSON.stringify({
+              name: byId("userName").value,
+              email: byId("userEmail").value,
+            }),
+          });
+          state.activeUser = user;
+          localStorage.setItem("activeUser", JSON.stringify(user));
+          renderActiveUser();
+          setMessage(`Utilisateur #${user.id} actif.`, "success");
+        } catch (error) {
+          setMessage(error.message, "error");
+        }
+      });
+
+      byId("resourceForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        try {
+          const resource = await request("/resources", {
+            method: "POST",
+            body: JSON.stringify({
+              name: byId("resourceName").value,
+              location: byId("resourceLocation").value,
+            }),
+          });
+          setMessage(`Ressource #${resource.id} ajoutee.`, "success");
+          await refreshResources();
+        } catch (error) {
+          setMessage(error.message, "error");
+        }
+      });
+
+      byId("reservationForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!state.activeUser) {
+          setMessage("Creer un utilisateur avant de reserver.", "error");
+          return;
+        }
+        try {
+          const reservation = await request("/reservations", {
+            method: "POST",
+            body: JSON.stringify({
+              user_id: state.activeUser.id,
+              resource_id: Number(byId("resourceSelect").value),
+              starts_at: new Date(byId("start").value).toISOString(),
+              ends_at: new Date(byId("end").value).toISOString(),
+            }),
+          });
+          setMessage(`Reservation #${reservation.id} confirmee.`, "success");
+          await refreshReservations();
+        } catch (error) {
+          setMessage(error.message, "error");
+        }
+      });
+
+      byId("refreshResources").addEventListener("click", refreshResources);
+      byId("refreshReservations").addEventListener("click", refreshReservations);
+
+      const userSuffix = Date.now().toString().slice(-5);
+      byId("userEmail").value = `tarek.${userSuffix}@example.com`;
+      const start = new Date(Date.now() + 86400000);
+      const end = new Date(start.getTime() + 3600000);
+      byId("start").value = toInputDate(start);
+      byId("end").value = toInputDate(end);
+
+      refreshAll().catch((error) => setMessage(error.message, "error"));
+    </script>
+  </body>
+</html>
