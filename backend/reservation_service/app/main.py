@@ -4,13 +4,18 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.reservation_service.app.config import settings
 from backend.reservation_service.app.controllers.routes import router
-from backend.reservation_service.app.database import create_schema
+from backend.reservation_service.app.database import SessionLocal, create_schema
+from backend.reservation_service.app.seed import seed_demo_data
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     create_schema()
+    if settings.demo_seed_enabled:
+        with SessionLocal() as db:
+            seed_demo_data(db)
     yield
 
 

@@ -10,3 +10,5 @@ htmlcov/
 postgres-data/
 reservations.db
 pytest-cache-files-*/
+rapport/
+AGENTS.md

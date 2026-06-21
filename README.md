@@ -16,6 +16,8 @@ copy .env.example .env
 docker compose up --build
 ```
 
+Le fichier `.env` est optionnel pour la demo : `docker-compose.yml` contient deja des valeurs par defaut non sensibles. Au premier demarrage Docker, `DEMO_SEED_ENABLED=true` ajoute automatiquement un utilisateur, deux ressources et une reservation de demonstration si la base est vide.
+
 Endpoints utiles :
 
 - Reservation API: http://localhost:8000/docs
