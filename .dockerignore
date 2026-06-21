@@ -1,0 +1,16 @@
+.git
+.github
+.pytest_cache
+.ruff_cache
+.venv
+__pycache__
+*.pyc
+.coverage
+.coverage.*
+coverage.xml
+htmlcov
+pytest-cache-files-*
+postgres-data
+reservations.db
+*.pdf
+docs

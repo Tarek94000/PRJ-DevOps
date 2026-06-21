@@ -8,16 +8,15 @@
       :root {
         --ink: #172033;
         --muted: #647084;
-        --line: #d9e2ee;
+        --line: #d8e0ea;
         --panel: #ffffff;
-        --page: #f3f6fb;
-        --nav: #12213d;
+        --page: #f4f7fb;
+        --nav: #102033;
         --blue: #2563eb;
-        --cyan: #0891b2;
-        --green: #16a34a;
+        --green: #15803d;
         --red: #dc2626;
-        --amber: #d97706;
-        --violet: #7c3aed;
+        --amber: #b45309;
+        --cyan: #0e7490;
       }
 
       * {
@@ -34,20 +33,17 @@
 
       .app {
         display: grid;
-        grid-template-columns: 260px minmax(0, 1fr);
+        grid-template-columns: 250px minmax(0, 1fr);
         min-height: 100vh;
       }
 
-      .sidebar {
+      aside {
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 18px;
         padding: 24px 18px;
-        color: white;
-        background:
-          linear-gradient(165deg, rgba(37, 99, 235, 0.35), transparent 36%),
-          linear-gradient(25deg, rgba(22, 163, 74, 0.22), transparent 42%),
-          var(--nav);
+        color: #eef4ff;
+        background: var(--nav);
       }
 
       .brand {
@@ -62,19 +58,13 @@
       }
 
       .brand p,
-      .help p {
-        margin: 8px 0 0;
+      .side-note {
         color: #cbd5e1;
         line-height: 1.45;
         font-size: 14px;
       }
 
-      .nav-card {
-        display: grid;
-        gap: 10px;
-      }
-
-      .nav-pill {
+      .nav-link {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -82,34 +72,14 @@
         padding: 0 12px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.1);
-        color: #e8eef8;
-        font-weight: 700;
+        font-weight: 800;
       }
 
-      .nav-pill span {
+      .nav-link span {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-      }
-
-      .nav-pill:nth-child(1) span {
-        background: var(--blue);
-      }
-
-      .nav-pill:nth-child(2) span {
         background: var(--green);
-      }
-
-      .nav-pill:nth-child(3) span {
-        background: var(--amber);
-      }
-
-      .help {
-        margin-top: auto;
-        padding: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.08);
       }
 
       main {
@@ -117,17 +87,22 @@
         padding: 24px;
       }
 
-      .topbar {
+      .topbar,
+      .panel-head,
+      .filters {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 20px;
+        gap: 12px;
       }
 
-      .title h2 {
+      .topbar {
+        margin-bottom: 18px;
+      }
+
+      h2,
+      h3 {
         margin: 0;
-        font-size: 26px;
       }
 
       .title p {
@@ -135,18 +110,26 @@
         color: var(--muted);
       }
 
-      .api-status {
+      .status-pill,
+      .tag {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .status-pill {
         gap: 8px;
         min-height: 38px;
-        padding: 0 13px;
         border: 1px solid var(--line);
-        border-radius: 999px;
         background: var(--panel);
         color: var(--muted);
         white-space: nowrap;
-        font-size: 14px;
       }
 
       .dot {
@@ -160,88 +143,61 @@
         background: var(--green);
       }
 
-      .active-user {
-        margin-bottom: 20px;
-        padding: 14px 16px;
-        border: 1px solid #bcd3ff;
-        border-left: 5px solid var(--blue);
-        border-radius: 8px;
-        background: #eef5ff;
-        color: #244064;
-        font-weight: 700;
-      }
-
       .metrics {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(6, minmax(130px, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
       }
 
       .metric {
-        min-height: 104px;
-        padding: 16px;
+        min-height: 92px;
+        padding: 14px;
+        border: 1px solid var(--line);
         border-radius: 8px;
-        color: white;
-        overflow: hidden;
-      }
-
-      .metric:nth-child(1) {
-        background: linear-gradient(135deg, #2563eb, #0891b2);
-      }
-
-      .metric:nth-child(2) {
-        background: linear-gradient(135deg, #16a34a, #65a30d);
-      }
-
-      .metric:nth-child(3) {
-        background: linear-gradient(135deg, #7c3aed, #db2777);
+        background: var(--panel);
       }
 
       .metric span {
         display: block;
-        color: rgba(255, 255, 255, 0.82);
-        font-size: 13px;
-        font-weight: 800;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 900;
         text-transform: uppercase;
       }
 
       .metric strong {
         display: block;
         margin-top: 10px;
-        font-size: 34px;
+        font-size: 30px;
       }
 
       .workspace {
         display: grid;
-        grid-template-columns: minmax(300px, 390px) minmax(0, 1fr);
-        gap: 18px;
+        grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+        gap: 16px;
         align-items: start;
       }
 
-      .column {
+      .column,
+      .list {
         display: grid;
-        gap: 14px;
+        gap: 12px;
       }
 
       .panel {
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--panel);
-        box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+        box-shadow: 0 8px 22px rgba(17, 24, 39, 0.05);
       }
 
       .panel-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 15px 16px;
+        padding: 14px 16px;
         border-bottom: 1px solid var(--line);
       }
 
       .panel-head h2 {
-        margin: 0;
         font-size: 17px;
       }
 
@@ -254,10 +210,18 @@
         gap: 12px;
       }
 
-      .two {
+      .two,
+      .three {
         display: grid;
-        grid-template-columns: 1fr 1fr;
         gap: 12px;
+      }
+
+      .two {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .three {
+        grid-template-columns: repeat(3, 1fr);
       }
 
       label {
@@ -270,28 +234,41 @@
 
       input,
       select,
+      textarea,
       button {
         width: 100%;
-        min-height: 42px;
         border-radius: 7px;
         font: inherit;
       }
 
       input,
-      select {
-        padding: 0 11px;
+      select,
+      textarea {
         border: 1px solid var(--line);
         background: #fbfdff;
         color: var(--ink);
       }
 
+      input,
+      select {
+        min-height: 40px;
+        padding: 0 10px;
+      }
+
+      textarea {
+        min-height: 72px;
+        padding: 10px;
+        resize: vertical;
+      }
+
       button {
-        padding: 0 14px;
+        min-height: 40px;
+        padding: 0 12px;
         border: 0;
-        color: white;
+        color: #ffffff;
         background: var(--blue);
         cursor: pointer;
-        font-weight: 800;
+        font-weight: 850;
       }
 
       button:hover {
@@ -321,14 +298,25 @@
         opacity: 0.55;
       }
 
+      .row-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .row-actions button {
+        width: auto;
+        min-width: 92px;
+      }
+
       .message {
         padding: 13px 14px;
-        border: 1px solid var(--line);
+        border: 1px solid #bae6fd;
         border-left: 5px solid var(--cyan);
         border-radius: 8px;
-        background: #eefaff;
+        background: #effaff;
         color: #155e75;
-        font-weight: 700;
+        font-weight: 750;
       }
 
       .message.error {
@@ -345,17 +333,12 @@
         background: #f0fdf4;
       }
 
-      .list {
-        display: grid;
-        gap: 10px;
-      }
-
       .item {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 12px;
         align-items: center;
-        padding: 14px;
+        padding: 13px;
         border: 1px solid var(--line);
         border-left: 5px solid var(--blue);
         border-radius: 8px;
@@ -366,13 +349,13 @@
         border-left-color: var(--green);
       }
 
+      .item.inactive,
       .item.cancelled {
         border-left-color: var(--red);
         background: #fff7f7;
       }
 
       .item h3 {
-        margin: 0;
         font-size: 15px;
       }
 
@@ -383,27 +366,18 @@
       }
 
       .tag {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 28px;
-        min-width: 92px;
-        padding: 0 10px;
-        border-radius: 999px;
         color: #166534;
         background: #dcfce7;
-        font-size: 12px;
-        font-weight: 900;
-        text-transform: uppercase;
       }
 
-      .tag.cancelled {
+      .tag.cancelled,
+      .tag.inactive {
         color: #991b1b;
         background: #fee2e2;
       }
 
       .empty {
-        padding: 24px;
+        padding: 22px;
         border: 1px dashed var(--line);
         border-radius: 8px;
         color: var(--muted);
@@ -411,105 +385,145 @@
         text-align: center;
       }
 
-      @media (max-width: 980px) {
-        .app {
-          grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-          min-height: auto;
-        }
-
-        .workspace,
+      @media (max-width: 1160px) {
         .metrics {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 980px) {
+        .app,
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          min-height: auto;
+        }
+      }
+
+      @media (max-width: 680px) {
         main {
           padding: 16px;
         }
 
         .topbar,
+        .panel-head,
+        .filters,
+        .item,
         .two,
-        .item {
+        .three,
+        .metrics {
+          display: grid;
           grid-template-columns: 1fr;
         }
 
-        .topbar {
+        .row-actions {
           display: grid;
+        }
+
+        .row-actions button {
+          width: 100%;
         }
       }
     </style>
   </head>
   <body>
     <div class="app">
-      <aside class="sidebar">
+      <aside>
         <div class="brand">
           <h1>Reservations DevOps</h1>
-          <p>Interface web pour tester les services Docker, l'API FastAPI et la base PostgreSQL.</p>
+          <p>Gestion des salles, ressources, reservations et notifications.</p>
         </div>
-        <nav class="nav-card">
-          <div class="nav-pill"><span></span> Utilisateurs</div>
-          <div class="nav-pill"><span></span> Ressources</div>
-          <div class="nav-pill"><span></span> Reservations</div>
-        </nav>
-        <div class="help">
-          <strong>Workflow</strong>
-          <p>Creer un utilisateur, ajouter une ressource, puis reserver un creneau disponible.</p>
-        </div>
+        <div class="nav-link"><span></span> Tableau de bord</div>
+        <div class="nav-link"><span></span> Utilisateurs</div>
+        <div class="nav-link"><span></span> Ressources</div>
+        <div class="nav-link"><span></span> Reservations</div>
+        <p class="side-note">API FastAPI, PostgreSQL, service de notification et interface statique Docker.</p>
       </aside>
 
       <main>
         <div class="topbar">
           <div class="title">
             <h2>Tableau de bord</h2>
-            <p>Gestion des salles, creneaux et annulations.</p>
+            <p id="activeUserLabel">Aucun utilisateur actif</p>
           </div>
-          <div class="api-status">
-            <span id="apiDot" class="dot"></span>
-            <span id="apiStatus">API...</span>
+          <div class="row-actions">
+            <button id="refreshAll" class="secondary" type="button">Rafraichir</button>
+            <div class="status-pill">
+              <span id="apiDot" class="dot"></span>
+              <span id="apiStatus">API...</span>
+            </div>
           </div>
         </div>
 
-        <div id="activeUserLabel" class="active-user">Aucun utilisateur actif</div>
-
         <section class="metrics">
-          <div class="metric"><span>Ressources</span><strong id="resourceCount">0</strong></div>
-          <div class="metric"><span>Reservations actives</span><strong id="activeCount">0</strong></div>
-          <div class="metric"><span>Total reservations</span><strong id="reservationCount">0</strong></div>
+          <div class="metric"><span>Ressources</span><strong id="totalResources">0</strong></div>
+          <div class="metric"><span>Actives</span><strong id="activeResources">0</strong></div>
+          <div class="metric"><span>Inactives</span><strong id="inactiveResources">0</strong></div>
+          <div class="metric"><span>Confirmees</span><strong id="activeReservations">0</strong></div>
+          <div class="metric"><span>Annulees</span><strong id="cancelledReservations">0</strong></div>
+          <div class="metric"><span>A venir</span><strong id="upcomingReservations">0</strong></div>
         </section>
 
         <section class="workspace">
           <div class="column">
+            <div id="message" class="message">Pret.</div>
+
             <article class="panel">
-              <div class="panel-head"><h2>1. Utilisateur</h2></div>
+              <div class="panel-head"><h2>Utilisateur</h2></div>
               <div class="panel-body">
                 <form id="userForm">
-                  <label>Nom <input id="userName" value="Tarek" required minlength="2" /></label>
-                  <label>Email <input id="userEmail" type="email" required /></label>
+                  <div class="two">
+                    <label>Nom <input id="userName" value="Tarek" required minlength="2" /></label>
+                    <label>Email <input id="userEmail" type="email" required /></label>
+                  </div>
                   <button type="submit">Creer utilisateur</button>
                 </form>
               </div>
             </article>
 
             <article class="panel">
-              <div class="panel-head"><h2>2. Ressource</h2></div>
+              <div class="panel-head">
+                <h2 id="resourceFormTitle">Ressource</h2>
+                <button id="clearResourceEdit" class="secondary" type="button">Nouveau</button>
+              </div>
               <div class="panel-body">
                 <form id="resourceForm">
-                  <label>Nom <input id="resourceName" value="Salle DevOps" required minlength="2" /></label>
-                  <label>Lieu <input id="resourceLocation" value="Campus Paris" required minlength="2" /></label>
-                  <button class="green" type="submit">Ajouter ressource</button>
+                  <div class="two">
+                    <label>Nom <input id="resourceName" value="Salle DevOps" required minlength="2" /></label>
+                    <label>Lieu <input id="resourceLocation" value="Campus Paris" required minlength="2" /></label>
+                  </div>
+                  <div class="three">
+                    <label>Capacite <input id="resourceCapacity" type="number" min="1" value="12" required /></label>
+                    <label>Type <input id="resourceType" value="room" required minlength="2" /></label>
+                    <label>Statut
+                      <select id="resourceActive">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                      </select>
+                    </label>
+                  </div>
+                  <label>Equipements <input id="resourceEquipment" value="wifi, ecran, tableau" /></label>
+                  <label>Description <textarea id="resourceDescription">Salle equipee pour les reunions projet.</textarea></label>
+                  <button id="resourceSubmit" class="green" type="submit">Ajouter ressource</button>
                 </form>
               </div>
             </article>
 
             <article class="panel">
-              <div class="panel-head"><h2>3. Reservation</h2></div>
+              <div class="panel-head">
+                <h2 id="reservationFormTitle">Reservation</h2>
+                <button id="clearReservationEdit" class="secondary" type="button">Nouveau</button>
+              </div>
               <div class="panel-body">
                 <form id="reservationForm">
                   <label>Ressource <select id="resourceSelect" required></select></label>
+                  <div class="two">
+                    <label>Titre <input id="reservationTitle" value="Atelier DevOps" required minlength="2" /></label>
+                    <label>Participants <input id="attendeesCount" type="number" min="1" value="4" required /></label>
+                  </div>
+                  <label>Motif <input id="reservationPurpose" value="Preparation du rendu" /></label>
                   <div class="two">
                     <label>Debut <input id="start" type="datetime-local" required /></label>
                     <label>Fin <input id="end" type="datetime-local" required /></label>
@@ -521,12 +535,24 @@
           </div>
 
           <div class="column">
-            <div id="message" class="message">Pret.</div>
+            <article class="panel">
+              <div class="panel-head">
+                <h2>Utilisateurs</h2>
+                <button id="refreshUsers" class="secondary" type="button">Rafraichir</button>
+              </div>
+              <div class="panel-body"><div id="users" class="list"></div></div>
+            </article>
 
             <article class="panel">
               <div class="panel-head">
-                <h2>Ressources disponibles</h2>
-                <button id="refreshResources" class="secondary" type="button">Rafraichir</button>
+                <h2>Ressources</h2>
+                <div class="filters">
+                  <select id="resourceFilter">
+                    <option value="all">Toutes</option>
+                    <option value="active">Actives</option>
+                    <option value="inactive">Inactives</option>
+                  </select>
+                </div>
               </div>
               <div class="panel-body"><div id="resources" class="list"></div></div>
             </article>
@@ -534,7 +560,13 @@
             <article class="panel">
               <div class="panel-head">
                 <h2>Reservations</h2>
-                <button id="refreshReservations" class="secondary" type="button">Rafraichir</button>
+                <div class="filters">
+                  <select id="reservationFilter">
+                    <option value="all">Toutes</option>
+                    <option value="confirmed">Confirmees</option>
+                    <option value="cancelled">Annulees</option>
+                  </select>
+                </div>
               </div>
               <div class="panel-body"><div id="reservations" class="list"></div></div>
             </article>
@@ -547,8 +579,12 @@
       const api = "http://localhost:8000";
       const state = {
         activeUser: JSON.parse(localStorage.getItem("activeUser") || "null"),
+        dashboard: {},
+        users: [],
         resources: [],
         reservations: [],
+        editingResourceId: null,
+        editingReservationId: null,
       };
 
       const byId = (id) => document.getElementById(id);
@@ -557,6 +593,13 @@
       function setMessage(text, type = "") {
         message.className = `message ${type}`.trim();
         message.textContent = text;
+      }
+
+      function equipmentFromInput() {
+        return byId("resourceEquipment").value
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
       }
 
       function toInputDate(date) {
@@ -583,6 +626,22 @@
         return data;
       }
 
+      function renderDashboard() {
+        const dashboard = state.dashboard;
+        byId("totalResources").textContent = dashboard.total_resources ?? state.resources.length;
+        byId("activeResources").textContent =
+          dashboard.active_resources ?? state.resources.filter((resource) => resource.is_active).length;
+        byId("inactiveResources").textContent =
+          dashboard.inactive_resources ?? state.resources.filter((resource) => !resource.is_active).length;
+        byId("activeReservations").textContent =
+          dashboard.active_reservations ??
+          state.reservations.filter((reservation) => reservation.status === "confirmed").length;
+        byId("cancelledReservations").textContent =
+          dashboard.cancelled_reservations ??
+          state.reservations.filter((reservation) => reservation.status === "cancelled").length;
+        byId("upcomingReservations").textContent = dashboard.upcoming_reservations ?? 0;
+      }
+
       function renderActiveUser() {
         const label = byId("activeUserLabel");
         if (!state.activeUser) {
@@ -591,55 +650,109 @@
           return;
         }
         label.textContent = `Utilisateur actif #${state.activeUser.id} - ${state.activeUser.name} (${state.activeUser.email})`;
-        byId("reserveButton").disabled = state.resources.length === 0;
+        byId("reserveButton").disabled = state.resources.filter((resource) => resource.is_active).length === 0;
+      }
+
+      function renderUsers() {
+        const container = byId("users");
+        if (state.users.length === 0) {
+          container.innerHTML = '<div class="empty">Aucun utilisateur.</div>';
+          return;
+        }
+        container.innerHTML = state.users
+          .map(
+            (user) => `
+              <article class="item">
+                <div>
+                  <h3>${user.name}</h3>
+                  <p>#${user.id} - ${user.email}</p>
+                </div>
+                <button class="secondary" type="button" data-user="${user.id}">Activer</button>
+              </article>
+            `,
+          )
+          .join("");
+        container.querySelectorAll("[data-user]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const user = state.users.find((item) => item.id === Number(button.dataset.user));
+            state.activeUser = user;
+            localStorage.setItem("activeUser", JSON.stringify(user));
+            renderActiveUser();
+            setMessage(`Utilisateur #${user.id} actif.`, "success");
+          });
+        });
       }
 
       function renderResources() {
         const container = byId("resources");
         const select = byId("resourceSelect");
-        byId("resourceCount").textContent = state.resources.length;
-        select.innerHTML = "";
+        const filter = byId("resourceFilter").value;
+        const selectable = state.resources.filter((resource) => resource.is_active);
+        const visible = state.resources.filter((resource) => {
+          if (filter === "active") return resource.is_active;
+          if (filter === "inactive") return !resource.is_active;
+          return true;
+        });
 
-        if (state.resources.length === 0) {
+        select.innerHTML = selectable.length
+          ? selectable
+              .map((resource) => `<option value="${resource.id}">${resource.name} - ${resource.location}</option>`)
+              .join("")
+          : '<option value="">Aucune ressource active</option>';
+
+        if (visible.length === 0) {
           container.innerHTML = '<div class="empty">Aucune ressource.</div>';
-          select.innerHTML = '<option value="">Ajouter une ressource</option>';
-          byId("reserveButton").disabled = true;
+          renderActiveUser();
           return;
         }
 
-        container.innerHTML = state.resources
+        container.innerHTML = visible
           .map(
             (resource) => `
-              <article class="item resource">
+              <article class="item resource ${resource.is_active ? "" : "inactive"}">
                 <div>
                   <h3>${resource.name}</h3>
-                  <p>#${resource.id} - ${resource.location}</p>
+                  <p>#${resource.id} - ${resource.location} - ${resource.capacity} places - ${resource.resource_type}</p>
+                  <p>${resource.equipment.join(", ") || "Aucun equipement"}${resource.description ? ` - ${resource.description}` : ""}</p>
                 </div>
-                <span class="tag">libre</span>
+                <div class="row-actions">
+                  <span class="tag ${resource.is_active ? "" : "inactive"}">${resource.is_active ? "active" : "inactive"}</span>
+                  <button class="secondary" type="button" data-edit-resource="${resource.id}">Editer</button>
+                  ${
+                    resource.is_active
+                      ? `<button class="danger" type="button" data-disable-resource="${resource.id}">Desactiver</button>`
+                      : ""
+                  }
+                </div>
               </article>
             `,
           )
           .join("");
 
-        select.innerHTML = state.resources
-          .map((resource) => `<option value="${resource.id}">${resource.name} - ${resource.location}</option>`)
-          .join("");
-        byId("reserveButton").disabled = !state.activeUser;
+        container.querySelectorAll("[data-edit-resource]").forEach((button) => {
+          button.addEventListener("click", () => editResource(Number(button.dataset.editResource)));
+        });
+        container.querySelectorAll("[data-disable-resource]").forEach((button) => {
+          button.addEventListener("click", () => disableResource(Number(button.dataset.disableResource)));
+        });
+        renderActiveUser();
       }
 
       function renderReservations() {
         const container = byId("reservations");
-        byId("reservationCount").textContent = state.reservations.length;
-        byId("activeCount").textContent = state.reservations.filter(
-          (reservation) => reservation.status === "confirmed",
-        ).length;
+        const filter = byId("reservationFilter").value;
+        const visible = state.reservations.filter((reservation) => {
+          if (filter === "confirmed") return reservation.status === "confirmed";
+          if (filter === "cancelled") return reservation.status === "cancelled";
+          return true;
+        });
 
-        if (state.reservations.length === 0) {
+        if (visible.length === 0) {
           container.innerHTML = '<div class="empty">Aucune reservation.</div>';
           return;
         }
 
-        container.innerHTML = state.reservations
+        container.innerHTML = visible
           .map((reservation) => {
             const resource = state.resources.find((item) => item.id === reservation.resource_id);
             const resourceName = resource ? resource.name : `Ressource #${reservation.resource_id}`;
@@ -647,43 +760,83 @@
             return `
               <article class="item ${cancelled ? "cancelled" : ""}">
                 <div>
-                  <h3>${resourceName}</h3>
-                  <p>#${reservation.id} - utilisateur #${reservation.user_id} - ${formatDate(
-                    reservation.starts_at,
-                  )} -> ${formatDate(reservation.ends_at)}</p>
+                  <h3>${reservation.title} - ${resourceName}</h3>
+                  <p>#${reservation.id} - utilisateur #${reservation.user_id} - ${reservation.attendees_count} participants</p>
+                  <p>${formatDate(reservation.starts_at)} -> ${formatDate(reservation.ends_at)}${reservation.purpose ? ` - ${reservation.purpose}` : ""}</p>
                 </div>
-                ${
-                  cancelled
-                    ? '<span class="tag cancelled">annulee</span>'
-                    : `<button class="danger" type="button" data-cancel="${reservation.id}">Annuler</button>`
-                }
+                <div class="row-actions">
+                  <span class="tag ${cancelled ? "cancelled" : ""}">${cancelled ? "annulee" : "confirmee"}</span>
+                  ${
+                    cancelled
+                      ? ""
+                      : `<button class="secondary" type="button" data-edit-reservation="${reservation.id}">Editer</button>
+                         <button class="danger" type="button" data-cancel="${reservation.id}">Annuler</button>`
+                  }
+                </div>
               </article>
             `;
           })
           .join("");
 
+        container.querySelectorAll("[data-edit-reservation]").forEach((button) => {
+          button.addEventListener("click", () => editReservation(Number(button.dataset.editReservation)));
+        });
         container.querySelectorAll("[data-cancel]").forEach((button) => {
-          button.addEventListener("click", async () => {
-            await cancelReservation(button.dataset.cancel);
-          });
+          button.addEventListener("click", () => cancelReservation(Number(button.dataset.cancel)));
         });
       }
 
-      async function refreshResources() {
-        state.resources = await request("/resources");
-        renderResources();
+      function clearResourceEdit() {
+        state.editingResourceId = null;
+        byId("resourceFormTitle").textContent = "Ressource";
+        byId("resourceSubmit").textContent = "Ajouter ressource";
+        byId("resourceName").value = "Salle DevOps";
+        byId("resourceLocation").value = "Campus Paris";
+        byId("resourceCapacity").value = "12";
+        byId("resourceType").value = "room";
+        byId("resourceActive").value = "true";
+        byId("resourceEquipment").value = "wifi, ecran, tableau";
+        byId("resourceDescription").value = "Salle equipee pour les reunions projet.";
       }
 
-      async function refreshReservations() {
-        state.reservations = await request("/reservations");
-        renderReservations();
+      function editResource(id) {
+        const resource = state.resources.find((item) => item.id === id);
+        if (!resource) return;
+        state.editingResourceId = id;
+        byId("resourceFormTitle").textContent = `Ressource #${id}`;
+        byId("resourceSubmit").textContent = "Mettre a jour";
+        byId("resourceName").value = resource.name;
+        byId("resourceLocation").value = resource.location;
+        byId("resourceCapacity").value = resource.capacity;
+        byId("resourceType").value = resource.resource_type;
+        byId("resourceActive").value = String(resource.is_active);
+        byId("resourceEquipment").value = resource.equipment.join(", ");
+        byId("resourceDescription").value = resource.description || "";
       }
 
-      async function refreshAll() {
-        await checkHealth();
-        await refreshResources();
-        await refreshReservations();
-        renderActiveUser();
+      function clearReservationEdit() {
+        state.editingReservationId = null;
+        byId("reservationFormTitle").textContent = "Reservation";
+        byId("reserveButton").textContent = "Reserver";
+        byId("resourceSelect").disabled = false;
+        byId("reservationTitle").value = "Atelier DevOps";
+        byId("reservationPurpose").value = "Preparation du rendu";
+        byId("attendeesCount").value = "4";
+      }
+
+      function editReservation(id) {
+        const reservation = state.reservations.find((item) => item.id === id);
+        if (!reservation) return;
+        state.editingReservationId = id;
+        byId("reservationFormTitle").textContent = `Reservation #${id}`;
+        byId("reserveButton").textContent = "Mettre a jour";
+        byId("resourceSelect").value = reservation.resource_id;
+        byId("resourceSelect").disabled = true;
+        byId("reservationTitle").value = reservation.title;
+        byId("reservationPurpose").value = reservation.purpose || "";
+        byId("attendeesCount").value = reservation.attendees_count;
+        byId("start").value = toInputDate(new Date(reservation.starts_at));
+        byId("end").value = toInputDate(new Date(reservation.ends_at));
       }
 
       async function checkHealth() {
@@ -697,11 +850,48 @@
         }
       }
 
+      async function refreshUsers() {
+        state.users = await request("/users");
+        renderUsers();
+      }
+
+      async function refreshResources() {
+        state.resources = await request("/resources");
+        renderResources();
+      }
+
+      async function refreshReservations() {
+        state.reservations = await request("/reservations");
+        renderReservations();
+      }
+
+      async function refreshDashboard() {
+        state.dashboard = await request("/dashboard");
+        renderDashboard();
+      }
+
+      async function refreshAll() {
+        await checkHealth();
+        await Promise.all([refreshUsers(), refreshResources(), refreshReservations()]);
+        await refreshDashboard();
+        renderActiveUser();
+      }
+
+      async function disableResource(id) {
+        try {
+          await request(`/resources/${id}`, { method: "DELETE" });
+          setMessage(`Ressource #${id} desactivee.`, "success");
+          await refreshAll();
+        } catch (error) {
+          setMessage(error.message, "error");
+        }
+      }
+
       async function cancelReservation(id) {
         try {
           await request(`/reservations/${id}/cancel`, { method: "POST" });
           setMessage(`Reservation #${id} annulee.`, "success");
-          await refreshReservations();
+          await refreshAll();
         } catch (error) {
           setMessage(error.message, "error");
         }
@@ -719,8 +909,8 @@
           });
           state.activeUser = user;
           localStorage.setItem("activeUser", JSON.stringify(user));
-          renderActiveUser();
           setMessage(`Utilisateur #${user.id} actif.`, "success");
+          await refreshAll();
         } catch (error) {
           setMessage(error.message, "error");
         }
@@ -728,16 +918,22 @@
 
       byId("resourceForm").addEventListener("submit", async (event) => {
         event.preventDefault();
+        const payload = {
+          name: byId("resourceName").value,
+          location: byId("resourceLocation").value,
+          capacity: Number(byId("resourceCapacity").value),
+          resource_type: byId("resourceType").value,
+          description: byId("resourceDescription").value,
+          equipment: equipmentFromInput(),
+          is_active: byId("resourceActive").value === "true",
+        };
         try {
-          const resource = await request("/resources", {
-            method: "POST",
-            body: JSON.stringify({
-              name: byId("resourceName").value,
-              location: byId("resourceLocation").value,
-            }),
-          });
-          setMessage(`Ressource #${resource.id} ajoutee.`, "success");
-          await refreshResources();
+          const path = state.editingResourceId ? `/resources/${state.editingResourceId}` : "/resources";
+          const method = state.editingResourceId ? "PATCH" : "POST";
+          const resource = await request(path, { method, body: JSON.stringify(payload) });
+          setMessage(`Ressource #${resource.id} enregistree.`, "success");
+          clearResourceEdit();
+          await refreshAll();
         } catch (error) {
           setMessage(error.message, "error");
         }
@@ -745,29 +941,41 @@
 
       byId("reservationForm").addEventListener("submit", async (event) => {
         event.preventDefault();
-        if (!state.activeUser) {
-          setMessage("Creer un utilisateur avant de reserver.", "error");
+        if (!state.activeUser && !state.editingReservationId) {
+          setMessage("Creer ou activer un utilisateur avant de reserver.", "error");
           return;
         }
+        const payload = {
+          title: byId("reservationTitle").value,
+          purpose: byId("reservationPurpose").value,
+          attendees_count: Number(byId("attendeesCount").value),
+          starts_at: new Date(byId("start").value).toISOString(),
+          ends_at: new Date(byId("end").value).toISOString(),
+        };
+        if (!state.editingReservationId) {
+          payload.user_id = state.activeUser.id;
+          payload.resource_id = Number(byId("resourceSelect").value);
+        }
         try {
-          const reservation = await request("/reservations", {
-            method: "POST",
-            body: JSON.stringify({
-              user_id: state.activeUser.id,
-              resource_id: Number(byId("resourceSelect").value),
-              starts_at: new Date(byId("start").value).toISOString(),
-              ends_at: new Date(byId("end").value).toISOString(),
-            }),
-          });
-          setMessage(`Reservation #${reservation.id} confirmee.`, "success");
-          await refreshReservations();
+          const path = state.editingReservationId
+            ? `/reservations/${state.editingReservationId}`
+            : "/reservations";
+          const method = state.editingReservationId ? "PATCH" : "POST";
+          const reservation = await request(path, { method, body: JSON.stringify(payload) });
+          setMessage(`Reservation #${reservation.id} enregistree.`, "success");
+          clearReservationEdit();
+          await refreshAll();
         } catch (error) {
           setMessage(error.message, "error");
         }
       });
 
-      byId("refreshResources").addEventListener("click", refreshResources);
-      byId("refreshReservations").addEventListener("click", refreshReservations);
+      byId("refreshAll").addEventListener("click", () => refreshAll().catch((error) => setMessage(error.message, "error")));
+      byId("refreshUsers").addEventListener("click", () => refreshUsers().catch((error) => setMessage(error.message, "error")));
+      byId("resourceFilter").addEventListener("change", renderResources);
+      byId("reservationFilter").addEventListener("change", renderReservations);
+      byId("clearResourceEdit").addEventListener("click", clearResourceEdit);
+      byId("clearReservationEdit").addEventListener("click", clearReservationEdit);
 
       const userSuffix = Date.now().toString().slice(-5);
       byId("userEmail").value = `tarek.${userSuffix}@example.com`;

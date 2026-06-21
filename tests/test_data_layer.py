@@ -5,7 +5,7 @@ from backend.reservation_service.app.data.repositories import (
     ResourceRepository,
     UserRepository,
 )
-from backend.reservation_service.app.schemas import ResourceCreate, UserCreate
+from backend.reservation_service.app.schemas import ReservationCreate, ResourceCreate, UserCreate
 
 
 def test_repositories_create_entities_and_detect_conflict(db_session):
@@ -18,9 +18,18 @@ def test_repositories_create_entities_and_detect_conflict(db_session):
 
     starts_at = datetime.now(UTC) + timedelta(days=1)
     ends_at = starts_at + timedelta(hours=1)
-    reservation = reservations.create(user.id, resource.id, starts_at, ends_at)
+    reservation = reservations.create(
+        ReservationCreate(
+            user_id=user.id,
+            resource_id=resource.id,
+            starts_at=starts_at,
+            ends_at=ends_at,
+        )
+    )
 
     assert reservation.id == 1
+    assert users.list() == [user]
+    assert resources.list() == [resource]
     assert reservations.has_conflict(resource.id, starts_at, ends_at)
     assert not reservations.has_conflict(
         resource.id,

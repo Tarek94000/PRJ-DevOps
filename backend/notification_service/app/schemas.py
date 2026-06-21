@@ -5,6 +5,7 @@ class NotificationCreate(BaseModel):
     reservation_id: int
     user_email: EmailStr
     message: str
+    event_type: str
 
 
 class NotificationRead(NotificationCreate):
