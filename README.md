@@ -95,7 +95,3 @@ Dependabot verifie chaque semaine les dependances `pip` et les actions GitHub af
 - GitHub Actions pour l'integration continue.
 - SonarCloud si l'analyse qualite est activee avec `SONAR_TOKEN`.
 - Google Cloud Skills Boost ou Google Labs selon la consigne Moodle.
-
-## Rapport
-
-Le rapport de projet est dans `docs/report.md`. Il contient les sections architecture, regles metier, tests, qualite logicielle et captures Google Labs a joindre avant la remise Moodle.
